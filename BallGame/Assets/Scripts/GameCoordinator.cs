@@ -60,7 +60,7 @@ public class GameCoordinator : MonoBehaviour
         //hae the ballread all the input the players just made
         m_User.ReadPlayerInput();
         //move the ball based off of input
-        m_User.Movement(m_User.m_Movement, m_User.m_Jumping);
+        m_User.Movement(m_User.m_Movement, m_User.m_Jumping, m_Camera);
         //update the Camera after the player has moved
         m_CamBeh.MoveCamera(m_User.m_FinalCamHorizontal, m_User.m_FinalCamVertical);
         //reset all ball's values so its read for next frame
