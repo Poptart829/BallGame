@@ -41,7 +41,7 @@ public class GameCoordinator : MonoBehaviour
         //set the game type and controlls need to be distrubted to the players
         m_InputManagerBeh.InitGame(InputManager.GameType.BallGame);
         // if there is one player in the game, and he doesn't want to use the keyboard
-        SinglePlayerController = isController && m_NumPlayers == 1 ? true : false;
+        SinglePlayerController = isController && m_NumPlayers == 1 && SinglePlayerController ? true : false;
         //used cuz singleplayer controller isn't set up and i dont care about doing it at this moment
         //SinglePlayerController = false;
         //assign input to the players that are connected
