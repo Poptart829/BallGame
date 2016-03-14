@@ -33,10 +33,10 @@ public class InputManager : MonoBehaviour
 
         m_GameType = _type;
     }
-    public float ReadInput(InputControlsBall _input)
-    {
-        return m_InputLegend[_input];
-    }
+    //public float ReadInput(InputControlsBall _input)
+    //{
+    //    return m_InputLegend[_input];
+    //}
 
     public float ReadInput(InputControlsBall _input, string _name, bool jump = false)
     {

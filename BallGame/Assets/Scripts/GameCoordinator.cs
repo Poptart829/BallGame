@@ -43,7 +43,7 @@ public class GameCoordinator : MonoBehaviour
         // if there is one player in the game, and he doesn't want to use the keyboard
         SinglePlayerController = isController && m_NumPlayers == 1 ? true : false;
         //used cuz singleplayer controller isn't set up and i dont care about doing it at this moment
-        SinglePlayerController = false;
+        //SinglePlayerController = false;
         //assign input to the players that are connected
         m_InputManagerBeh.AssignInput(m_PlayerSpawnerBeh, m_NumPlayers, SinglePlayerController);
         //set the user
