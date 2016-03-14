@@ -16,6 +16,8 @@ public class Ball : MonoBehaviour
     private float m_FinalHorizontal;
     private float m_FinalVertical;
     private float m_FinalJump;
+    public float m_FinalCamHorizontal;
+    public float m_FinalCamVertical;
     // Use this for initialization
     void Start()
     {
@@ -31,6 +33,8 @@ public class Ball : MonoBehaviour
             m_FinalHorizontal += player.Horizontal;
             m_FinalVertical += player.Vertical;
             m_FinalJump += player.m_Jump;
+            m_FinalCamHorizontal += player.CamHorizontalValue;
+            m_FinalCamVertical += player.CamVerticalValue;
         }
         m_Movement = (m_FinalVertical * Vector3.right + m_FinalHorizontal * Vector3.forward).normalized;
         m_Jumping = m_FinalJump > 0.0f ? true : false;
@@ -51,7 +55,8 @@ public class Ball : MonoBehaviour
 
     public void ResetMovementValues()
     {
-        m_FinalHorizontal = m_FinalJump = m_FinalVertical = 0;
+        m_FinalHorizontal = m_FinalJump = m_FinalVertical =
+            m_FinalCamVertical = m_FinalCamHorizontal = 0;
         m_Movement = Vector3.zero;
         m_Jumping = false;
     }

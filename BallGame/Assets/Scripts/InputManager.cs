@@ -7,7 +7,8 @@ public class InputManager : MonoBehaviour
     public enum InputControlsBall
     {
         HorizontalAxis, VerticalAxis,
-        Jump, MaxSize
+        Jump,CamHorizontalAxis, CamVerticalAxis,
+        MaxSize
     };
 
     public enum GameType
@@ -58,7 +59,7 @@ public class InputManager : MonoBehaviour
         return m_InputLegend[_Input];
     }
 
-    public void AssignInput(PlayerSpawner _pSpawn, int _numPlayers)
+    public void AssignInput(PlayerSpawner _pSpawn, int _numPlayers, bool _singlePlayerController)
     {
         if (_pSpawn.GetPlayer == null)
         {
@@ -96,7 +97,7 @@ public class InputManager : MonoBehaviour
             //add the input that the player will be responceable for 
             b.m_Controls.Add((InputControlsBall)x);
             //set names for unity to read input
-            b.SetNames((InputControlsBall)x, curPlayer);
+            b.SetNames((InputControlsBall)x, curPlayer, _singlePlayerController);
             //we need to make sure the current player never excides
             if (curPlayer + 1 >= size)
                 curPlayer = 0;

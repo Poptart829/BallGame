@@ -6,18 +6,23 @@ public class GameCoordinator : MonoBehaviour
 {
     public GameObject m_InputManager;
     public GameObject m_PlayerSpawner;
+    public GameObject m_Camera;
     public int m_NumPlayers = -1;
     public bool isController = false;
     private CameraBeh m_CamBeh;
     private PlayerSpawner m_PlayerSpawnerBeh;
     private InputManager m_InputManagerBeh;
     private Ball m_User;
+
+
+    //test
+    public bool SinglePlayerController;
     // Use this for initialization
     private void Awake()
     {
         m_PlayerSpawnerBeh = m_PlayerSpawner.GetComponent<PlayerSpawner>();
         m_InputManagerBeh = m_InputManager.GetComponent<InputManager>();
-        m_CamBeh = Camera.main.GetComponent<CameraBeh>();
+        m_CamBeh = m_Camera.GetComponent<CameraBeh>();
         if (m_NumPlayers == -1)
             m_NumPlayers = 1;
     }
@@ -36,9 +41,11 @@ public class GameCoordinator : MonoBehaviour
         //set the game type and controlls need to be distrubted to the players
         m_InputManagerBeh.InitGame(InputManager.GameType.BallGame);
         // if there is one player in the game, and he doesn't want to use the keyboard
-        //bool SinglePlayerController = isController && m_NumPlayers == 1 ? true : false;
+        SinglePlayerController = isController && m_NumPlayers == 1 ? true : false;
+        //used cuz singleplayer controller isn't set up and i dont care about doing it at this moment
+        SinglePlayerController = false;
         //assign input to the players that are connected
-        m_InputManagerBeh.AssignInput(m_PlayerSpawnerBeh, m_NumPlayers);
+        m_InputManagerBeh.AssignInput(m_PlayerSpawnerBeh, m_NumPlayers, SinglePlayerController);
         //set the user
         m_User = m_PlayerSpawnerBeh.GetPlayer.GetComponent<Ball>();
 
@@ -54,6 +61,8 @@ public class GameCoordinator : MonoBehaviour
         m_User.ReadPlayerInput();
         //move the ball based off of input
         m_User.Movement(m_User.m_Movement, m_User.m_Jumping);
+        //update the Camera after the player has moved
+        m_CamBeh.MoveCamera(m_User.m_FinalCamHorizontal, m_User.m_FinalCamVertical);
         //reset all ball's values so its read for next frame
         m_User.ResetMovementValues();
     }
