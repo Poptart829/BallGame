@@ -38,12 +38,10 @@ public class Ball : MonoBehaviour
             m_FinalCamHorizontal += player.CamHorizontalValue;
             m_FinalCamVertical += player.CamVerticalValue;
         }
-        Debug.Log(m_FinalHorizontal + "FH");
-        Debug.Log(m_FinalVertical + "FV");
-
-        
+        m_Movement.x = m_FinalHorizontal;
+        m_Movement.z = m_FinalVertical;
         //from unity ball project. dont get it but it seems to work.
-        m_Movement = (m_FinalVertical * Vector3.right + m_FinalHorizontal * Vector3.forward).normalized;
+        //m_Movement = (m_FinalVertical * Vector3.right + m_FinalHorizontal * Vector3.forward).normalized;
         m_Jumping = m_FinalJump > 0.0f ? true : false;
     }
 
@@ -51,10 +49,14 @@ public class Ball : MonoBehaviour
     {
         if (moveDirection.magnitude <= 0.0f)
             return;
+
+        Vector3 movement = new Vector3();
+        movement = moveDirection.z * _camera.transform.forward + moveDirection.x * _camera.transform.right;
+
         //caps the movement speed
         float curSpeed = m_RigidBody.velocity.magnitude;
         if (curSpeed < m_MaxSpeed)
-            m_RigidBody.AddForce((_camera.transform.forward * m_MovePower * m_SpeedMultiplier) + moveDirection);
+            m_RigidBody.AddForce(movement.normalized * m_MovePower * m_SpeedMultiplier);
         if (Physics.Raycast(transform.position, -Vector3.up / 2, k_GroundRayLength) && jump)
         {
             Vector3 jumpvec = Vector3.up * m_JumpPower;
