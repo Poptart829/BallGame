@@ -9,9 +9,11 @@ public class CameraBeh : MonoBehaviour
     private Vector3 m_Offset;
     private Vector3 objLastFramePos;
     private Vector3 returnToPosition;
+    public GameObject m_SpawnPoint;
     public void Init(GameObject _obj)
     {
         //what object the camera will follow
+        transform.position =  m_SpawnPoint.transform.position;
         m_ObjToFollow = _obj;
         m_ObjTrans = m_ObjToFollow.transform;
         m_Offset = transform.position - m_ObjTrans.position;
@@ -54,11 +56,7 @@ public class CameraBeh : MonoBehaviour
         if (Physics.Linecast(transform.position, m_ObjTrans.position, out hit, mask))
         {
             if (!beenHit)
-            {
                 pos = hit.transform.position;
-                Debug.Log(transform.position);
-                Debug.Log(hit.transform.position);
-            }
             beenHit = true;
             transform.position = Vector3.Lerp(transform.position, m_ObjTrans.position, Time.deltaTime);
 
