@@ -6,9 +6,7 @@ public class CameraBeh : MonoBehaviour
     public GameObject m_ObjToFollow;
     public float m_RotationSpeed = 15;
     private Transform m_ObjTrans;
-    private Vector3 m_Offset;
     private Vector3 objLastFramePos;
-    private Vector3 returnToPosition;
     public GameObject m_SpawnPoint;
     public void Init(GameObject _obj)
     {
@@ -16,12 +14,9 @@ public class CameraBeh : MonoBehaviour
         transform.position =  m_SpawnPoint.transform.position;
         m_ObjToFollow = _obj;
         m_ObjTrans = m_ObjToFollow.transform;
-        m_Offset = transform.position - m_ObjTrans.position;
         objLastFramePos = m_ObjTrans.position;
-        returnToPosition = Vector3.zero;
-        Debug.Log("Camera FOV" + Camera.main.fieldOfView);
-
     }
+
     public void MoveCamera(float _xAmount, float _yAmount)
     {
         //how much to move the camera from last from to this frame
@@ -55,6 +50,7 @@ public class CameraBeh : MonoBehaviour
 #if true
         if (Physics.Linecast(transform.position, m_ObjTrans.position, out hit, mask))
         {
+            Debug.Log(hit.transform.gameObject);
             if (!beenHit)
                 pos = hit.transform.position;
             beenHit = true;
