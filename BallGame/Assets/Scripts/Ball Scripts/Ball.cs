@@ -72,4 +72,9 @@ public class Ball : MonoBehaviour
         m_Movement = Vector3.zero;
         m_Jumping = false;
     }
+
+    public void OnCollisionEnter(Collision col)
+    {
+        Debug.Log(col.gameObject.name);
+    }
 }

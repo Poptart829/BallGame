@@ -34,7 +34,7 @@ public class CameraBeh : MonoBehaviour
         //update the last frame position
         objLastFramePos = m_ObjTrans.position;
     }
-    private bool beenHit;
+    private bool beenHit = false;
     Vector3 distanceBetween;
     Vector3 targetDistance;
     Vector3 lerpTo;
@@ -55,13 +55,12 @@ public class CameraBeh : MonoBehaviour
                 pos = hit.transform.position;
             beenHit = true;
             transform.position = Vector3.Lerp(transform.position, m_ObjTrans.position, Time.deltaTime);
-
             Vector3 rotationY = Vector3.left * m_RotationSpeed * Time.deltaTime;
-            //move the camera based off of rotation
             transform.Translate(rotationY);
         }
         if (beenHit)
         {
+            Debug.Log("been hit");
             distanceBetween = transform.position - m_ObjTrans.position;
             targetDistance = (pos - m_ObjTrans.position) - distanceBetween;
             lerpTo = transform.position + targetDistance;
