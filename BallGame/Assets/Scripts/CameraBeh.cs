@@ -3,20 +3,22 @@ using System.Collections;
 
 public class CameraBeh : MonoBehaviour
 {
-    public GameObject m_ObjToFollow;
-    public float m_RotationSpeed = 15;
+    private GameObject m_ObjToFollow;
+    public float m_RotationSpeed = 7;
     private Transform m_ObjTrans;
     private Vector3 objLastFramePos;
     public GameObject m_SpawnPoint;
+    private float m_Magnitude = 4.0f;
     public void Init(GameObject _obj)
     {
         //what object the camera will follow
-        transform.position =  m_SpawnPoint.transform.position;
+        transform.position = m_SpawnPoint.transform.position;
         m_ObjToFollow = _obj;
         m_ObjTrans = m_ObjToFollow.transform;
         objLastFramePos = m_ObjTrans.position;
+        transform.position = m_ObjTrans.position + (transform.position - m_ObjTrans.position);
     }
-
+    private float m_SphereRadius = 1.0f;
     public void MoveCamera(float _xAmount, float _yAmount)
     {
         //how much to move the camera from last from to this frame
@@ -33,50 +35,45 @@ public class CameraBeh : MonoBehaviour
         transform.position += distanceTraveled;
         //update the last frame position
         objLastFramePos = m_ObjTrans.position;
+        CameraLineCheck(_xAmount, _yAmount);
+        bool _getBack = false;
+        float currentMagnitude = (m_ObjTrans.position - transform.position).magnitude;
+        if (currentMagnitude < m_Magnitude)
+        {
+            _getBack = true;
+        }
+
+        Collider[] _col = Physics.OverlapSphere(transform.position, m_SphereRadius);
+        bool b = false;
+        foreach (Collider col in _col)
+        {
+            if (col.gameObject.tag == "Maze")
+                b = true;
+        }
+
+        if (currentMagnitude < m_Magnitude)
+            if (_getBack && !b)
+            {
+                transform.position += Vector3.up + Vector3.back;
+            }
     }
-    private bool beenHit = false;
-    Vector3 distanceBetween;
-    Vector3 targetDistance;
-    Vector3 lerpTo;
-    Vector3 pos;
-    Vector3 resetPos;
-    void LateUpdate()
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, m_SphereRadius);
+    }
+
+    private void CameraLineCheck(float _x, float _y)
     {
         RaycastHit hit;
         LayerMask mask;
-        mask = 1 << 8;
-        mask = ~mask;
+        mask = ~(1 << 8);
         Debug.DrawLine(transform.position, m_ObjTrans.position, Color.black);
-#if true
+        float distanceMagnitude = (m_ObjTrans.position - transform.position).magnitude;
         if (Physics.Linecast(transform.position, m_ObjTrans.position, out hit, mask))
         {
-            Debug.Log(hit.transform.gameObject);
-            if (!beenHit)
-                pos = hit.transform.position;
-            beenHit = true;
-            transform.position = Vector3.Lerp(transform.position, m_ObjTrans.position, Time.deltaTime);
-            Vector3 rotationY = Vector3.left * m_RotationSpeed * Time.deltaTime;
-            transform.Translate(rotationY);
+            this.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
         }
-        if (beenHit)
-        {
-            Debug.Log("been hit");
-            distanceBetween = transform.position - m_ObjTrans.position;
-            targetDistance = (pos - m_ObjTrans.position) - distanceBetween;
-            lerpTo = transform.position + targetDistance;
-            transform.position = Vector3.Lerp( lerpTo, transform.position, Time.deltaTime * 5.0f);
-            if ((transform.position - lerpTo).magnitude < 0.1f)
-                beenHit = false;
-        }
-#else
-        if (Physics.Linecast(transform.position, m_ObjTrans.position, out hit, mask))
-        {
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 10, Time.deltaTime * 2.0f);
-        }
-        else
-        {
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 60, Time.deltaTime * 2.0f);
-        }
-#endif
     }
 }
