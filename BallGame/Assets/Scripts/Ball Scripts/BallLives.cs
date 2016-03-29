@@ -25,7 +25,7 @@ public class BallLives : MonoBehaviour
 
     public void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 200, 20), m_Lives.ToString());
+        GUI.Label(new Rect(10, 10, 200, 20),"Player Lives :  " + m_Lives.ToString());
     }
 
 }

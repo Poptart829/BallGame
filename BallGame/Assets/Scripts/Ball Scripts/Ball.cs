@@ -47,6 +47,13 @@ public class Ball : MonoBehaviour
 
     public void Movement(Vector3 moveDirection, bool jump, GameObject _camera)
     {
+
+        if (Physics.Raycast(transform.position, -Vector3.up / 2, k_GroundRayLength) && jump)
+        {
+            Vector3 jumpvec = Vector3.up * m_JumpPower;
+            m_RigidBody.AddForce(jumpvec, ForceMode.Impulse);
+        }
+
         if (moveDirection.magnitude <= 0.0f)
             return;
 
@@ -57,12 +64,6 @@ public class Ball : MonoBehaviour
         float curSpeed = m_RigidBody.velocity.magnitude;
         if (curSpeed < m_MaxSpeed)
             m_RigidBody.AddForce(movement.normalized * m_MovePower * m_SpeedMultiplier);
-        if (Physics.Raycast(transform.position, -Vector3.up / 2, k_GroundRayLength) && jump)
-        {
-            Vector3 jumpvec = Vector3.up * m_JumpPower;
-            m_RigidBody.AddForce(jumpvec, ForceMode.Impulse);
-        }
-
     }
 
     public void ResetMovementValues()

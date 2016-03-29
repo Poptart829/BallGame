@@ -9,6 +9,8 @@ public class CameraBeh : MonoBehaviour
     private Vector3 objLastFramePos;
     public GameObject m_SpawnPoint;
     private float m_Magnitude = 4.0f;
+    private float m_SphereRadius = 1.0f;
+
     public void Init(GameObject _obj)
     {
         //what object the camera will follow
@@ -18,7 +20,7 @@ public class CameraBeh : MonoBehaviour
         objLastFramePos = m_ObjTrans.position;
         transform.position = m_ObjTrans.position + (transform.position - m_ObjTrans.position);
     }
-    private float m_SphereRadius = 1.0f;
+
     public void MoveCamera(float _xAmount, float _yAmount)
     {
         //how much to move the camera from last from to this frame
@@ -35,7 +37,7 @@ public class CameraBeh : MonoBehaviour
         transform.position += distanceTraveled;
         //update the last frame position
         objLastFramePos = m_ObjTrans.position;
-        CameraLineCheck(_xAmount, _yAmount);
+        CameraLineCheck();
         bool _getBack = false;
         float currentMagnitude = (m_ObjTrans.position - transform.position).magnitude;
         if (currentMagnitude < m_Magnitude)
@@ -64,13 +66,12 @@ public class CameraBeh : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, m_SphereRadius);
     }
 
-    private void CameraLineCheck(float _x, float _y)
+    private void CameraLineCheck()
     {
         RaycastHit hit;
         LayerMask mask;
         mask = ~(1 << 8);
-        Debug.DrawLine(transform.position, m_ObjTrans.position, Color.black);
-        float distanceMagnitude = (m_ObjTrans.position - transform.position).magnitude;
+        //Debug.DrawLine(transform.position, m_ObjTrans.position, Color.black);
         if (Physics.Linecast(transform.position, m_ObjTrans.position, out hit, mask))
         {
             this.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
