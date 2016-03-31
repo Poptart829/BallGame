@@ -10,6 +10,7 @@ public class CameraBeh : MonoBehaviour
     public GameObject m_SpawnPoint;
     private float m_Magnitude = 4.0f;
     private float m_SphereRadius = 1.0f;
+    private Vector3 snapShotPosition;
 
     public void Init(GameObject _obj)
     {
@@ -21,8 +22,18 @@ public class CameraBeh : MonoBehaviour
         transform.position = m_ObjTrans.position + (transform.position - m_ObjTrans.position);
     }
 
+    private bool getBack = false;
     public void MoveCamera(float _xAmount, float _yAmount)
     {
+        float currentMagnitude = (m_ObjTrans.position - transform.position).magnitude;
+        if (currentMagnitude < m_Magnitude)
+        {
+            if (!getBack)
+                snapShotPosition = transform.position;
+            getBack = true;
+        }
+        if (BackUp(currentMagnitude,ref getBack, snapShotPosition))
+            _xAmount = _yAmount = 0;
         //how much to move the camera from last from to this frame
         Vector3 distanceTraveled = m_ObjTrans.position - objLastFramePos;
         //look at the ball
@@ -38,26 +49,20 @@ public class CameraBeh : MonoBehaviour
         //update the last frame position
         objLastFramePos = m_ObjTrans.position;
         CameraLineCheck();
-        bool _getBack = false;
-        float currentMagnitude = (m_ObjTrans.position - transform.position).magnitude;
-        if (currentMagnitude < m_Magnitude)
-        {
-            _getBack = true;
-        }
+    }
 
-        Collider[] _col = Physics.OverlapSphere(transform.position, m_SphereRadius);
-        bool b = false;
-        foreach (Collider col in _col)
+    bool BackUp(float _currentMagnitude, ref bool _getBack, Vector3 snapShotPos)
+    {
+        if (_currentMagnitude < m_Magnitude)
         {
-            if (col.gameObject.tag == "Maze")
-                b = true;
-        }
-
-        if (currentMagnitude < m_Magnitude)
-            if (_getBack && !b)
+            if (_getBack)
             {
-                transform.position += Vector3.up + Vector3.back;
+                transform.position = snapShotPos;
+                return _getBack;
             }
+        }
+        _getBack = false;
+        return _getBack;
     }
 
     void OnDrawGizmos()
