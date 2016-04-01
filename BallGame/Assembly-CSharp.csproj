@@ -60,11 +60,14 @@
      <Compile Include="Assets\Scripts\CoinBeh.cs" />
      <Compile Include="Assets\Scripts\CoinManager.cs" />
      <Compile Include="Assets\Scripts\GameCoordinator.cs" />
+     <Compile Include="Assets\Scripts\InfoPasser.cs" />
      <Compile Include="Assets\Scripts\InputManager.cs" />
      <Compile Include="Assets\Scripts\Item\ItemCollision.cs" />
      <Compile Include="Assets\Scripts\Item\ItemDefs.cs" />
      <Compile Include="Assets\Scripts\Item\ItemRotation.cs" />
      <Compile Include="Assets\Scripts\LightRotation.cs" />
+     <Compile Include="Assets\Scripts\MENU\ControllerSelectionScript.cs" />
+     <Compile Include="Assets\Scripts\MENU\Menu.cs" />
      <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
      <Compile Include="Assets\Scripts\StarWall.cs" />
      <Compile Include="Assets\Scripts\WallTrigger.cs" />

@@ -14,7 +14,8 @@ public class GameCoordinator : MonoBehaviour
     private InputManager m_InputManagerBeh;
     private Ball m_User;
 
-
+    private InfoPasser m_InfoToRead;
+    private InfoPasser.Controls m_HowToPlay;
     //test
     public bool SinglePlayerController;
     // Use this for initialization
@@ -25,6 +26,11 @@ public class GameCoordinator : MonoBehaviour
         m_CamBeh = m_Camera.GetComponent<CameraBeh>();
         if (m_NumPlayers == -1)
             m_NumPlayers = 1;
+        m_InfoToRead = FindObjectOfType<InfoPasser>();
+        m_NumPlayers = m_InfoToRead.MyInfo.GetNumPlayers();
+        m_HowToPlay = m_InfoToRead.MyInfo.GetHowToPlay();
+        if (m_NumPlayers == 1 && m_HowToPlay == InfoPasser.Controls.OneXbox)
+            SinglePlayerController = true;
     }
     void Start()
     {
@@ -41,11 +47,11 @@ public class GameCoordinator : MonoBehaviour
         //set the game type and controlls need to be distrubted to the players
         m_InputManagerBeh.InitGame(InputManager.GameType.BallGame);
         // if there is one player in the game, and he doesn't want to use the keyboard
-        SinglePlayerController = isController && m_NumPlayers == 1 && SinglePlayerController ? true : false;
+        //SinglePlayerController = isController && m_NumPlayers == 1 && SinglePlayerController ? true : false;
         //used cuz singleplayer controller isn't set up and i dont care about doing it at this moment
         //SinglePlayerController = false;
         //assign input to the players that are connected
-        m_InputManagerBeh.AssignInput(m_PlayerSpawnerBeh, m_NumPlayers, SinglePlayerController);
+        m_InputManagerBeh.AssignInput(m_PlayerSpawnerBeh, m_NumPlayers, SinglePlayerController, m_HowToPlay);
         //set the user
         m_User = m_PlayerSpawnerBeh.GetPlayer.GetComponent<Ball>();
 

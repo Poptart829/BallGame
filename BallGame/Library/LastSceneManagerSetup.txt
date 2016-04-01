@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_play.unity
+- path: Assets/_SCENES_/_ControlSetUp.unity
   isLoaded: 1
   isActive: 1

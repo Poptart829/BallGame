@@ -53,52 +53,112 @@ public class BallCtrl : MonoBehaviour
             }
         }
     }
+    private void SPCXBOX(InputManager.InputControlsBall _input)
+    {
+        switch (_input)
+        {
+            case InputManager.InputControlsBall.HorizontalAxis:
+                m_HorizontalAxisName = "SHorizontal";
+                break;
+            case InputManager.InputControlsBall.VerticalAxis:
+                m_VerticalAxisName = "SVertical";
+                break;
+            case InputManager.InputControlsBall.Jump:
+                m_JumpAxisName = "SJump";
+                break;
+            case InputManager.InputControlsBall.CamHorizontalAxis:
+                m_CamHorizontalAxisName = "SCamHorizontal";
+                break;
+            case InputManager.InputControlsBall.CamVerticalAxis:
+                m_CamVerticalAxisName = "SCamVertical";
+                break;
+        }
+    }
 
-    public void SetNames(InputManager.InputControlsBall _input, int _player, bool _singlePlayerController)
+    private void SPCKEYBOARD(InputManager.InputControlsBall _input, int _player)
+    {
+        switch (_input)
+        {
+            case InputManager.InputControlsBall.HorizontalAxis:
+                m_HorizontalAxisName = "Horizontal " + _player;
+                break;
+            case InputManager.InputControlsBall.VerticalAxis:
+                m_VerticalAxisName = "Vertical " + _player;
+                break;
+            case InputManager.InputControlsBall.Jump:
+                m_JumpAxisName = "Jump " + _player;
+                break;
+            case InputManager.InputControlsBall.CamHorizontalAxis:
+                m_CamHorizontalAxisName = "CamHorizontal " + _player;
+                break;
+            case InputManager.InputControlsBall.CamVerticalAxis:
+                m_CamVerticalAxisName = "CamVertical " + _player;
+                break;
+        }
+    }
+
+    private void DOUBLEXBOX(InputManager.InputControlsBall _input, bool _player)
+    {
+        switch (_input)
+        {
+            case InputManager.InputControlsBall.HorizontalAxis:
+                if (_player )
+                    m_HorizontalAxisName = "Horizontal 1";
+                else
+                    m_HorizontalAxisName = "SHorizontal";
+                break;
+            case InputManager.InputControlsBall.VerticalAxis:
+                if (_player)
+                    m_VerticalAxisName = "Vertical 1";
+                else
+                    m_VerticalAxisName = "SVertical";
+                break;
+            case InputManager.InputControlsBall.Jump:
+                if (_player)
+                    m_JumpAxisName = "Jump 1";
+                else
+                    m_JumpAxisName = "SJump";
+                break;
+            case InputManager.InputControlsBall.CamHorizontalAxis:
+                if (_player)
+                    m_CamHorizontalAxisName = "CamHorizontal 1"; 
+                else
+                    m_CamHorizontalAxisName = "SCamHorizontal";
+                break;
+            case InputManager.InputControlsBall.CamVerticalAxis:
+                if (_player)
+                    m_CamVerticalAxisName = "CamVertical 1";
+                else
+                    m_CamVerticalAxisName = "SCamVertical";
+                break;
+        }
+    }
+
+    public void SetNames(InputManager.InputControlsBall _input, int _player, bool _singlePlayerController, InfoPasser.Controls _controls)
     {
         // set the solo player
         // if ther is one pass the bool
-        if (_singlePlayerController)
+
+        switch (_controls)
         {
-            switch (_input)
-            {
-                case InputManager.InputControlsBall.HorizontalAxis:
-                    m_HorizontalAxisName = "SHorizontal";
-                    break;
-                case InputManager.InputControlsBall.VerticalAxis:
-                    m_VerticalAxisName = "SVertical";
-                    break;
-                case InputManager.InputControlsBall.Jump:
-                    m_JumpAxisName = "SJump";
-                    break;
-                case InputManager.InputControlsBall.CamHorizontalAxis:
-                    m_CamHorizontalAxisName = "SCamHorizontal";
-                    break;
-                case InputManager.InputControlsBall.CamVerticalAxis:
-                    m_CamVerticalAxisName = "SCamVertical";
-                    break;
-            }
-        }
-        else
-        {
-            switch (_input)
-            {
-                case InputManager.InputControlsBall.HorizontalAxis:
-                    m_HorizontalAxisName = "Horizontal " + _player;
-                    break;
-                case InputManager.InputControlsBall.VerticalAxis:
-                    m_VerticalAxisName = "Vertical " + _player;
-                    break;
-                case InputManager.InputControlsBall.Jump:
-                    m_JumpAxisName = "Jump " + _player;
-                    break;
-                case InputManager.InputControlsBall.CamHorizontalAxis:
-                    m_CamHorizontalAxisName = "CamHorizontal " + _player;
-                    break;
-                case InputManager.InputControlsBall.CamVerticalAxis:
-                    m_CamVerticalAxisName = "CamVertical " + _player;
-                    break;
-            }
+            case InfoPasser.Controls.OneKeyboard:
+                Debug.Log("SWITCH ONE KEY BOARD");
+                SPCKEYBOARD(_input, _player);
+                break;
+            case InfoPasser.Controls.OneXbox:
+                Debug.Log("ONE XBOX CONTROLLER");
+                SPCXBOX(_input);
+                break;
+            case InfoPasser.Controls.KeyboardAndXbox:
+                Debug.Log("ONE KEYBOARD & ONE XBOX CONTROLLER");
+                SPCXBOX(_input); break;
+            case InfoPasser.Controls.DoubleXbox:
+                Debug.Log("TWO XBOX CONTROLLERS");
+                bool temp = _player == 1 ? true : false;
+                DOUBLEXBOX(_input, temp);
+                break;
+            default:
+                break;
         }
     }
 }
