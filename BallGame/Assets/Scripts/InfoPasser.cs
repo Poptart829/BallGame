@@ -25,10 +25,4 @@ public class InfoPasser : MonoBehaviour
         MyInfo.SetPlayers((int)1);
         DontDestroyOnLoad(this.gameObject);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

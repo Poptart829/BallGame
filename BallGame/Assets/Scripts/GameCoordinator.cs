@@ -27,8 +27,16 @@ public class GameCoordinator : MonoBehaviour
         if (m_NumPlayers == -1)
             m_NumPlayers = 1;
         m_InfoToRead = FindObjectOfType<InfoPasser>();
-        m_NumPlayers = m_InfoToRead.MyInfo.GetNumPlayers();
-        m_HowToPlay = m_InfoToRead.MyInfo.GetHowToPlay();
+        if (m_InfoToRead != null)
+        {
+            m_NumPlayers = m_InfoToRead.MyInfo.GetNumPlayers();
+            m_HowToPlay = m_InfoToRead.MyInfo.GetHowToPlay();
+        }
+        else
+        {
+            m_NumPlayers = (int)1;
+            m_HowToPlay = InfoPasser.Controls.OneXbox;
+        }
         if (m_NumPlayers == 1 && m_HowToPlay == InfoPasser.Controls.OneXbox)
             SinglePlayerController = true;
     }

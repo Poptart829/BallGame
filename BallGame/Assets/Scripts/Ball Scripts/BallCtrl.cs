@@ -53,6 +53,7 @@ public class BallCtrl : MonoBehaviour
             }
         }
     }
+
     private void SPCXBOX(InputManager.InputControlsBall _input)
     {
         switch (_input)
@@ -97,37 +98,74 @@ public class BallCtrl : MonoBehaviour
         }
     }
 
+    private void DOUBLE_XBOX_AND_KEYBOARD(InputManager.InputControlsBall _input,bool _player)
+    {
+        switch (_input)
+        {
+            case InputManager.InputControlsBall.HorizontalAxis:
+                if (_player)
+                    m_HorizontalAxisName = "Horizontal 0";
+                else
+                    m_HorizontalAxisName = "SHorizontal";
+                break;
+            case InputManager.InputControlsBall.VerticalAxis:
+                if (_player)
+                    m_VerticalAxisName = "Vertical 0";
+                else
+                    m_VerticalAxisName = "SVertical";
+                break;
+            case InputManager.InputControlsBall.Jump:
+                if (_player)
+                    m_JumpAxisName = "Jump 0";
+                else
+                    m_JumpAxisName = "SJump";
+                break;
+            case InputManager.InputControlsBall.CamHorizontalAxis:
+                if (_player)
+                    m_CamHorizontalAxisName = "CamHorizontal 0";
+                else
+                    m_CamHorizontalAxisName = "SCamHorizontal";
+                break;
+            case InputManager.InputControlsBall.CamVerticalAxis:
+                if (_player)
+                    m_CamVerticalAxisName = "CamVertical 0";
+                else
+                    m_CamVerticalAxisName = "SCamVertical";
+                break;
+        }
+    }
+
     private void DOUBLEXBOX(InputManager.InputControlsBall _input, bool _player)
     {
         switch (_input)
         {
             case InputManager.InputControlsBall.HorizontalAxis:
                 if (_player )
-                    m_HorizontalAxisName = "Horizontal 1";
+                    m_HorizontalAxisName = "SHorizontal 1";
                 else
                     m_HorizontalAxisName = "SHorizontal";
                 break;
             case InputManager.InputControlsBall.VerticalAxis:
                 if (_player)
-                    m_VerticalAxisName = "Vertical 1";
+                    m_VerticalAxisName = "SVertical 1";
                 else
                     m_VerticalAxisName = "SVertical";
                 break;
             case InputManager.InputControlsBall.Jump:
                 if (_player)
-                    m_JumpAxisName = "Jump 1";
+                    m_JumpAxisName = "SJump 1";
                 else
                     m_JumpAxisName = "SJump";
                 break;
             case InputManager.InputControlsBall.CamHorizontalAxis:
                 if (_player)
-                    m_CamHorizontalAxisName = "CamHorizontal 1"; 
+                    m_CamHorizontalAxisName = "SCamHorizontal 1"; 
                 else
                     m_CamHorizontalAxisName = "SCamHorizontal";
                 break;
             case InputManager.InputControlsBall.CamVerticalAxis:
                 if (_player)
-                    m_CamVerticalAxisName = "CamVertical 1";
+                    m_CamVerticalAxisName = "SCamVertical 1";
                 else
                     m_CamVerticalAxisName = "SCamVertical";
                 break;
@@ -142,18 +180,16 @@ public class BallCtrl : MonoBehaviour
         switch (_controls)
         {
             case InfoPasser.Controls.OneKeyboard:
-                Debug.Log("SWITCH ONE KEY BOARD");
                 SPCKEYBOARD(_input, _player);
                 break;
             case InfoPasser.Controls.OneXbox:
-                Debug.Log("ONE XBOX CONTROLLER");
                 SPCXBOX(_input);
                 break;
             case InfoPasser.Controls.KeyboardAndXbox:
-                Debug.Log("ONE KEYBOARD & ONE XBOX CONTROLLER");
-                SPCXBOX(_input); break;
+                bool t = _player == 1 ? true : false;
+                DOUBLE_XBOX_AND_KEYBOARD(_input, t);
+                break;
             case InfoPasser.Controls.DoubleXbox:
-                Debug.Log("TWO XBOX CONTROLLERS");
                 bool temp = _player == 1 ? true : false;
                 DOUBLEXBOX(_input, temp);
                 break;

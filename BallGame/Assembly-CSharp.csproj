@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\CameraBeh.cs" />
      <Compile Include="Assets\Scripts\CoinBeh.cs" />
      <Compile Include="Assets\Scripts\CoinManager.cs" />
+     <Compile Include="Assets\Scripts\EndGameTrigge.cs" />
      <Compile Include="Assets\Scripts\GameCoordinator.cs" />
      <Compile Include="Assets\Scripts\InfoPasser.cs" />
      <Compile Include="Assets\Scripts\InputManager.cs" />

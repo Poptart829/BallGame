@@ -36,8 +36,7 @@ public class CameraBeh : MonoBehaviour
             _xAmount = _yAmount = 0;
         //how much to move the camera from last from to this frame
         Vector3 distanceTraveled = m_ObjTrans.position - objLastFramePos;
-        //look at the ball
-        transform.LookAt(m_ObjTrans);
+
         //how much to rotate
         Vector3 rotationY = Vector3.left * _xAmount * m_RotationSpeed * Time.deltaTime;
         Vector3 rotationX = Vector3.up * _yAmount * m_RotationSpeed * Time.deltaTime;
@@ -48,6 +47,8 @@ public class CameraBeh : MonoBehaviour
         transform.position += distanceTraveled;
         //update the last frame position
         objLastFramePos = m_ObjTrans.position;
+        //look at the ball
+        transform.LookAt(m_ObjTrans);
         CameraLineCheck();
     }
 
