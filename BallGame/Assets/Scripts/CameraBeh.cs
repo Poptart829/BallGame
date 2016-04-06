@@ -1,16 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CameraBeh : MonoBehaviour
 {
-    private GameObject m_ObjToFollow;
     public float m_RotationSpeed = 7;
+    public GameObject m_SpawnPoint;
+    public GameObject[] m_CamIntroObjects;
+    private Vector3[] m_travelPositions;
+    private GameObject m_ObjToFollow;
     private Transform m_ObjTrans;
     private Vector3 objLastFramePos;
-    public GameObject m_SpawnPoint;
     private float m_Magnitude = 4.0f;
     private float m_SphereRadius = 1.0f;
     private Vector3 snapShotPosition;
+    private bool getBack = false;
+
+    void Start()
+    {
+        m_travelPositions = new Vector3[m_CamIntroObjects.Length];
+        for (int x = 0; x < m_CamIntroObjects.Length; x++)
+        {
+            m_travelPositions[x] = m_CamIntroObjects[x].transform.position;
+        }
+    }
 
     public void Init(GameObject _obj)
     {
@@ -22,7 +35,11 @@ public class CameraBeh : MonoBehaviour
         transform.position = m_ObjTrans.position + (transform.position - m_ObjTrans.position);
     }
 
-    private bool getBack = false;
+    public void ResetCamPos()
+    {
+        transform.position = m_SpawnPoint.transform.position;
+    }
+
     public void MoveCamera(float _xAmount, float _yAmount)
     {
         float currentMagnitude = (m_ObjTrans.position - transform.position).magnitude;
@@ -83,5 +100,25 @@ public class CameraBeh : MonoBehaviour
         {
             this.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
         }
+    }
+    private int m_Index = 1;
+    public bool FancyCameraIntro()
+    {
+        transform.position = Vector3.Lerp(transform.position, m_travelPositions[m_Index], Time.deltaTime);
+        transform.LookAt(m_CamIntroObjects[0].transform);
+        Vector3 norm = (m_travelPositions[m_Index] - transform.position);
+        if (norm.magnitude < 3.0f)
+        {
+            m_Index++;
+            if (m_Index == m_travelPositions.Length - 3)
+            {
+                GameObject obj = GameObject.Find("StartWall");
+                StarWall s = obj.GetComponent<StarWall>();
+                s.StartMovement = true;
+            }
+        }
+        if (m_Index >= m_travelPositions.Length)
+            return true;
+        return false;
     }
 }

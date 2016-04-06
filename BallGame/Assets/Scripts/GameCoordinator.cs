@@ -39,7 +39,10 @@ public class GameCoordinator : MonoBehaviour
         }
         if (m_NumPlayers == 1 && m_HowToPlay == InfoPasser.Controls.OneKeyboard)
             SinglePlayerController = false;
+
+
     }
+
     void Start()
     {
         //used to read if we have controllers connected through unity interface
@@ -64,20 +67,31 @@ public class GameCoordinator : MonoBehaviour
         m_User = m_PlayerSpawnerBeh.GetPlayer.GetComponent<Ball>();
 
     }
-
+    private bool m_CamMovement = false;
     // Update is called once per frame
     void Update()
     {
-        //read each players input for the frame
-        foreach (BallCtrl player in m_User.AttachedPlayers)
-            player.ReadInput(m_InputManagerBeh);
-        //hae the ballread all the input the players just made
-        m_User.ReadPlayerInput();
-        //move the ball based off of input
-        m_User.Movement(m_User.m_Movement, m_User.m_Jumping, m_Camera);
-        //update the Camera after the player has moved
-        m_CamBeh.MoveCamera(m_User.m_FinalCamHorizontal, m_User.m_FinalCamVertical);
-        //reset all ball's values so its read for next frame
-        m_User.ResetMovementValues();
+        if (!m_CamMovement)
+        {
+            if (m_CamBeh.FancyCameraIntro())
+            {
+                m_CamMovement = true;
+                m_CamBeh.ResetCamPos();
+            }
+        }
+        else
+        {
+            //read each players input for the frame
+            foreach (BallCtrl player in m_User.AttachedPlayers)
+                player.ReadInput(m_InputManagerBeh);
+            //hae the ballread all the input the players just made
+            m_User.ReadPlayerInput();
+            //move the ball based off of input
+            m_User.Movement(m_User.m_Movement, m_User.m_Jumping, m_Camera);
+            //update the Camera after the player has moved
+            m_CamBeh.MoveCamera(m_User.m_FinalCamHorizontal, m_User.m_FinalCamVertical);
+            //reset all ball's values so its read for next frame
+            m_User.ResetMovementValues();
+        }
     }
 }
