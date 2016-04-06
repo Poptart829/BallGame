@@ -32,7 +32,7 @@ public class CameraBeh : MonoBehaviour
                 snapShotPosition = transform.position;
             getBack = true;
         }
-        if (BackUp(currentMagnitude,ref getBack, snapShotPosition))
+        if (BackUp(currentMagnitude, ref getBack, snapShotPosition))
             _xAmount = _yAmount = 0;
         //how much to move the camera from last from to this frame
         Vector3 distanceTraveled = m_ObjTrans.position - objLastFramePos;
@@ -48,6 +48,7 @@ public class CameraBeh : MonoBehaviour
         //update the last frame position
         objLastFramePos = m_ObjTrans.position;
         //look at the ball
+
         transform.LookAt(m_ObjTrans);
         CameraLineCheck();
     }

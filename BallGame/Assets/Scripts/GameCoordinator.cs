@@ -37,8 +37,8 @@ public class GameCoordinator : MonoBehaviour
             m_NumPlayers = (int)1;
             m_HowToPlay = InfoPasser.Controls.OneXbox;
         }
-        if (m_NumPlayers == 1 && m_HowToPlay == InfoPasser.Controls.OneXbox)
-            SinglePlayerController = true;
+        if (m_NumPlayers == 1 && m_HowToPlay == InfoPasser.Controls.OneKeyboard)
+            SinglePlayerController = false;
     }
     void Start()
     {
