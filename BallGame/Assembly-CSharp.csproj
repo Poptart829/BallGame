@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\Item\ItemRotation.cs" />
      <Compile Include="Assets\Scripts\LightRotation.cs" />
      <Compile Include="Assets\Scripts\MENU\ControllerSelectionScript.cs" />
+     <Compile Include="Assets\Scripts\MENU\EndGameMenu.cs" />
      <Compile Include="Assets\Scripts\MENU\Menu.cs" />
      <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
      <Compile Include="Assets\Scripts\StarWall.cs" />

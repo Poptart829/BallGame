@@ -38,12 +38,6 @@ public class ControllerSelectionScript : MonoBehaviour
         info = InfoToPassOn.GetComponent<InfoPasser>();
 	}
 	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
-
     public void OnOneClick()
     {
         OneKeyboard.gameObject.SetActive(true);
