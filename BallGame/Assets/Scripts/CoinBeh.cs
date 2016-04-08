@@ -38,11 +38,10 @@ public class CoinBeh : MonoBehaviour
             m_HitSound.Play();
             gameObject.GetComponent<Renderer>().enabled = false;
             gameObject.GetComponent<SphereCollider>().enabled = false;
-            //StarParticles.transform.SetParent(null);
             StarParticles.Play();
             isDead = true;
-            //Destroy(StarParticles, StarParticles.duration);
-            //Destroy(gameObject,m_HitSound.clip.length);
+            GameObject obj = GameObject.Find("CoinManager");
+            obj.GetComponent<CoinManager>().DecCoinsLeft(1);
         }
     }
 }

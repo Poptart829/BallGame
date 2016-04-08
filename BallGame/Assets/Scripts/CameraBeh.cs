@@ -102,11 +102,18 @@ public class CameraBeh : MonoBehaviour
         }
     }
     private int m_Index = 1;
+
     public bool FancyCameraIntro()
     {
         transform.position = Vector3.Lerp(transform.position, m_travelPositions[m_Index], Time.deltaTime);
         transform.LookAt(m_CamIntroObjects[0].transform);
         Vector3 norm = (m_travelPositions[m_Index] - transform.position);
+        if (Input.GetButton("Submit") || Input.GetButton("SJump") || Input.GetButton("Jump 0"))
+            if (m_Index < m_travelPositions.Length)
+            {
+                m_Index++;
+                return true;
+            }
         if (norm.magnitude < 3.0f)
         {
             m_Index++;

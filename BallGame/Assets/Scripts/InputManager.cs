@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
     public enum InputControlsBall
     {
         HorizontalAxis, VerticalAxis,
-        Jump,CamHorizontalAxis, CamVerticalAxis,
+        Jump, CamHorizontalAxis, CamVerticalAxis,
         MaxSize
     };
 
@@ -18,9 +18,37 @@ public class InputManager : MonoBehaviour
 
     public GameType m_GameType;
     private Dictionary<InputControlsBall, float> m_InputLegend;
+    private List<int> m_InputList;
+    private void RandomInputOrder()
+    {
+        int[] intValue = { 0, 1, 2, 3, 4 };
+        m_InputList = new List<int>();
+        while (true)
+        {
+            int number = Random.Range(0, intValue.Length);
+            bool b = false;
+            for (int x = 0; x < m_InputList.Count; x++)
+            {
+                if (m_InputList[x] == number)
+                {
+                    b = true;
+                    break;
+                }
+            }
+            if (b)
+                continue;
+            m_InputList.Add(number);
+            if (m_InputList.Count == (int)InputControlsBall.MaxSize)
+                break;
+        }
+
+
+    }
+
     // Use this for initialization
     public void InitGame(GameType _type)
     {
+        RandomInputOrder();
         //set up the controls need for the game type
         // SIDENOTE : in future will probly use different input manager per game, maybe
         if (_type == GameType.BallGame)
@@ -80,7 +108,7 @@ public class InputManager : MonoBehaviour
         //number of players on the ball
         int size = user.transform.childCount;
         //looping through all the input/controls we need to assign to the players on the ball
-        for (int x = 0; x < (int)InputControlsBall.MaxSize; x++)
+        for (int x = 0; x < m_InputList.Count; x++)
         {
             //get the transform so we can get the gameobj
             Transform t = user.transform.GetChild(curPlayer);
@@ -97,7 +125,7 @@ public class InputManager : MonoBehaviour
             //add the input that the player will be responceable for 
             b.m_Controls.Add((InputControlsBall)x);
             //set names for unity to read input
-            b.SetNames((InputControlsBall)x, curPlayer, _singlePlayerController,_controls);
+            b.SetNames((InputControlsBall)m_InputList[x], curPlayer, _singlePlayerController, _controls);
             //we need to make sure the current player never excides
             if (curPlayer + 1 >= size)
                 curPlayer = 0;

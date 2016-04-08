@@ -21,7 +21,7 @@ public class ItemCollision : MonoBehaviour
                 case ItemDefs.ItemTypes.LIVES:
                     BallLives bLives = _hit.gameObject.GetComponent<BallLives>();
                     if (bLives)
-                        bLives.m_Lives++;
+                        bLives.IncLives(1);
                     break;
             }
             Destroy(gameObject);

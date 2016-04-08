@@ -6,6 +6,8 @@ public class CoinManager : MonoBehaviour
     public GameObject m_CoinPrefab;
     public GameObject m_MapPrefab;
     private int m_Offset = 5;
+    private GameObject m_FirstBorn;
+    private int m_Amount;
     // Use this for initialization
     void Start()
     {
@@ -25,8 +27,29 @@ public class CoinManager : MonoBehaviour
                 }
                 if (hitWall)
                     Destroy(obj);
+                else
+                {
+                    m_Amount++;
+                    if (m_FirstBorn == null)
+                        m_FirstBorn = obj;
+                    else
+                        obj.transform.SetParent(m_FirstBorn.transform);
+                }
             }
         }
-
     }
+
+    public void DecCoinsLeft(int _sub)
+    {
+        m_Amount -= _sub;
+    }
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(200, 10, 50, 50), "Coins Left : " + m_Amount.ToString());
+    }
+
+
+
+
 }

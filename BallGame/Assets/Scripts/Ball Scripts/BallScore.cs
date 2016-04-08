@@ -4,11 +4,13 @@ using System.Collections;
 public class BallScore : MonoBehaviour
 {
     private int m_Score = 0;
+    private string baseString;
+    private Rect ScorePosition = new Rect(10, 30, 200, 20);
 
 	// Use this for initialization
 	void Start ()
     {
-	
+        baseString = "Player Score : ";
 	}
 	
 	// Update is called once per frame
@@ -24,6 +26,6 @@ public class BallScore : MonoBehaviour
 
     public void OnGUI()
     {
-        GUI.Label(new Rect(10, 30, 200, 20), "Player Score : " + m_Score.ToString());
+        GUI.Label(ScorePosition, baseString + m_Score);
     }
 }

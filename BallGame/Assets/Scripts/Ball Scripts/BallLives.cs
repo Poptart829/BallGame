@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BallLives : MonoBehaviour
 {
-    public int m_Lives;
+    private int m_Lives;
     private int m_StartLives;
 	// Use this for initialization
 	void Start ()
@@ -22,6 +22,10 @@ public class BallLives : MonoBehaviour
         m_Lives = m_StartLives;
     }
 
+    public void IncLives(int _add)
+    {
+        m_Lives += _add;
+    }
 
     public void OnGUI()
     {
