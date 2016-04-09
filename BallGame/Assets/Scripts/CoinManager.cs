@@ -6,11 +6,13 @@ public class CoinManager : MonoBehaviour
     public GameObject m_CoinPrefab;
     public GameObject m_MapPrefab;
     private int m_Offset = 5;
-    private GameObject m_FirstBorn;
+    private GameObject m_FirstBorn ;
     private int m_Amount;
+    public int m_ClearAmount;
     // Use this for initialization
     void Start()
     {
+        m_FirstBorn = new GameObject("EmptyCoinHolder");
         Renderer r = m_MapPrefab.GetComponent<Renderer>();
         Vector3 size = r.bounds.size;
         for (int x = 0; x < size.x; x += m_Offset)
@@ -30,13 +32,12 @@ public class CoinManager : MonoBehaviour
                 else
                 {
                     m_Amount++;
-                    if (m_FirstBorn == null)
-                        m_FirstBorn = obj;
-                    else
-                        obj.transform.SetParent(m_FirstBorn.transform);
+                    obj.transform.SetParent(m_FirstBorn.transform);
                 }
             }
         }
+
+        m_ClearAmount = (m_Amount * 2) / 3;
     }
 
     public void DecCoinsLeft(int _sub)
@@ -49,7 +50,9 @@ public class CoinManager : MonoBehaviour
         GUI.Label(new Rect(200, 10, 50, 50), "Coins Left : " + m_Amount.ToString());
     }
 
-
-
+    public bool isDone(int _amount)
+    {
+        return _amount >= m_ClearAmount ? true : false;
+    }
 
 }

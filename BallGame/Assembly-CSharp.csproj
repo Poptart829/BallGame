@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\CoinBeh.cs" />
      <Compile Include="Assets\Scripts\CoinManager.cs" />
      <Compile Include="Assets\Scripts\EndGameTrigge.cs" />
+     <Compile Include="Assets\Scripts\Explosion.cs" />
      <Compile Include="Assets\Scripts\GameCoordinator.cs" />
      <Compile Include="Assets\Scripts\InfoPasser.cs" />
      <Compile Include="Assets\Scripts\InputManager.cs" />
@@ -71,6 +72,7 @@
      <Compile Include="Assets\Scripts\MENU\EndGameMenu.cs" />
      <Compile Include="Assets\Scripts\MENU\Menu.cs" />
      <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
+     <Compile Include="Assets\Scripts\SparkParticles.cs" />
      <Compile Include="Assets\Scripts\StarWall.cs" />
      <Compile Include="Assets\Scripts\WallTrigger.cs" />
      <None Include="Assets\PowerUps Vol 1 Free\Readme.txt" />
